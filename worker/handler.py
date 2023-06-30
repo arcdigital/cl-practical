@@ -26,6 +26,8 @@ def work(event, context):
                 os.remove(f"/tmp/{fileName}")
             except Exception as e:
                 logger.exception(f"Failed to store event: {record['messageId']}")
+                # append message id to failure array
                 failures.append({"itemIdentifier": record['messageId']})
-
+        
+        # respond with any message ids in the batch that failed
         return response
