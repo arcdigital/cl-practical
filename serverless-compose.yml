@@ -6,3 +6,6 @@ services:
   worker:
     path: worker
 
+  logger:
+    path: logger
+    dependsOn: worker

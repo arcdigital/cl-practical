@@ -1,0 +1,20 @@
+org: arcdigital
+app: cl-practical
+service: logger
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+
+functions:
+  logger:
+    handler: handler.log
+    events:
+      - s3: 
+          bucket: ${output:worker.bucketName}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: events/
+            - suffix: .json
+          existing: true
