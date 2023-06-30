@@ -1,0 +1,28 @@
+org: arcdigital
+app: cl-practical
+service: worker
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+
+constructs:
+  storage:
+    type: storage
+  jobs:
+    type: queue
+    worker:
+      handler: handler.work
+      environment:
+        BUCKET_NAME: ${construct:storage.bucketName}
+
+outputs:
+  queueUrl: ${construct:jobs.queueUrl}
+  queueArn: ${construct:jobs.queueArn}
+  bucketName: ${construct:storage.bucketName}
+  bucketArn: ${construct:storage.bucketArn}
+
+plugins:
+  - serverless-lift
+  - serverless-python-requirements
