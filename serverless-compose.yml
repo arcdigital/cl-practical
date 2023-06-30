@@ -1,4 +1,8 @@
 services:
+  api:
+    path: api
+    dependsOn: worker
+
   worker:
     path: worker
 

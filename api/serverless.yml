@@ -1,0 +1,27 @@
+org: arcdigital
+app: cl-practical
+service: api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.9
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: "sqs:sendmessage"
+          Resource: ${output:worker.queueArn}
+
+functions:
+  api:
+    handler: handler.api
+    events:
+      - httpApi:
+          method: post
+          path: /v1/ingest
+    environment:
+      QUEUE_URL: ${output:worker.queueUrl}
+
+plugins:
+  - serverless-python-requirements
