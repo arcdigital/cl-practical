@@ -21,3 +21,8 @@ var/
 
 # nodejs
 node_modules
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
