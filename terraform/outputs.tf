@@ -3,6 +3,6 @@ output "serverless_deploy_id" {
 }
 
 output "serverless_deploy_key" {
-  value = aws_iam_access_key.serverless_deploy.secret
+  value     = aws_iam_access_key.serverless_deploy.secret
   sensitive = true
 }
