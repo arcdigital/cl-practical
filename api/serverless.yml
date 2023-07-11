@@ -25,3 +25,10 @@ functions:
 
 plugins:
   - serverless-python-requirements
+  - serverless-newrelic-lambda-layers
+
+custom:
+  newRelic:
+    accountId: ${param:nr_id}
+    apiKey: ${param:nr_key}
+    enableFunctionLogs: true

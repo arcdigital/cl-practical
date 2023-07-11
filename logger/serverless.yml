@@ -18,3 +18,12 @@ functions:
             - prefix: events/
             - suffix: .json
           existing: true
+
+plugins:
+  - serverless-newrelic-lambda-layers
+
+custom:
+  newRelic:
+    accountId: ${param:nr_id}
+    apiKey: ${param:nr_key}
+    enableFunctionLogs: true
