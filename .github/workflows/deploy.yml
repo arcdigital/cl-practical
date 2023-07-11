@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: deploy
+    name: Test and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,9 +22,39 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install Node Dependencies
         run: npm ci
 
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r api/requirements_dev.txt
+          pip install pytest pytest-cov
+
+      - name: Test API Function
+        run: |
+          cd api && pytest test_handler.py
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: none
+          AWS_SECRET_ACCESS_KEY: none
+
+      - name: Test Worker Function
+        run: |
+          cd worker && pytest test_handler.py
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: none
+          AWS_SECRET_ACCESS_KEY: none
+
+      - name: Test Logger Function
+        run: |
+          cd logger && pytest test_handler.py
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: none
+          AWS_SECRET_ACCESS_KEY: none
+  
       - name: serverless deploy
         uses: serverless/github-action@v3.2
         with:

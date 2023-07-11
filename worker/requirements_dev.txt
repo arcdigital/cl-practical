@@ -1,0 +1,4 @@
+boto3==1.26.163
+moto==4.1.12
+pytest==7.4.0
+aws-lambda-powertools==2.19.0

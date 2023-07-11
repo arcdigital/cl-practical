@@ -6,9 +6,10 @@ import boto3
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-BUCKET_NAME = os.getenv("BUCKET_NAME")
 S3 = boto3.client("s3")
 
+def get_bucket_name():
+    return os.getenv("BUCKET_NAME")
 
 def work(event, context):
     if event:
@@ -22,7 +23,7 @@ def work(event, context):
                 file = open(f"/tmp/{fileName}", "w")
                 json.dump(record, file)
                 file.close()
-                S3.upload_file(f"/tmp/{fileName}", BUCKET_NAME, f"events/{fileName}")
+                S3.upload_file(f"/tmp/{fileName}", get_bucket_name(), f"events/{fileName}")
                 os.remove(f"/tmp/{fileName}")
             except Exception as e:
                 logger.exception(f"Failed to store event: {record['messageId']}")
