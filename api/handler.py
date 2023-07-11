@@ -6,9 +6,10 @@ import boto3
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-QUEUE_URL = os.getenv("QUEUE_URL")
 SQS = boto3.client("sqs")
 
+def get_queue_url():
+    return os.getenv("QUEUE_URL")
 
 def api(event, context):
     if not event.get("body"):
@@ -16,7 +17,7 @@ def api(event, context):
 
     try:
         SQS.send_message(
-            QueueUrl=QUEUE_URL,
+            QueueUrl=get_queue_url(),
             MessageBody=event["body"],
         )
     except Exception as e:
