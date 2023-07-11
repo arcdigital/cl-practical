@@ -46,6 +46,7 @@ data "aws_iam_policy_document" "serverless_deploy" {
       "iam:PassRole",
       "iam:PutRolePolicy",
       "iam:UpdateAssumeRolePolicy",
+      "iam:ListPolicies",
       "lambda:AddPermission",
       "lambda:CreateEventSourceMapping",
       "lambda:CreateFunction",
